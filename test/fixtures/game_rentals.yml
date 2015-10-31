@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game_id: 
+  owner: 1
+  renter: 1
+  checkout: 2015-10-29 19:45:46
+  checkin: 2015-10-29 19:45:46
+
+two:
+  game_id: 
+  owner: 1
+  renter: 1
+  checkout: 2015-10-29 19:45:46
+  checkin: 2015-10-29 19:45:46
