@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
+	authenticates_with_sorcery!
 	include TheRole::Api::User
-  authenticates_with_sorcery!
-
-  validates :password, length: { minimum: 8 }
-	validates :password, confirmation: true
-	validates :email, uniqueness: true, email_format: { message: 'Not a valid email.' }
+ 
+  validates :password, length: { minimum: 8 }, on: :create
+	validates :password, confirmation: true, on: :create
+	validates :email, uniqueness: true, email_format: { message: 'Not a valid email.' }, on: :create
 	
 	# has_many :games, through: 
 
@@ -12,5 +12,9 @@ class User < ActiveRecord::Base
 	 	([first_name, last_name] - ['']).compact.join(' ')
 	end
 
+	def activate
+		@user = User.load_from_activation_token(self.activation_token)
+		@user.activate!
+	end
 
 end
