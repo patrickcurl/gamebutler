@@ -13,8 +13,8 @@ default: &default
 development:
   <<: *default
 #  database: db/development.sqlite3
-  database: gamemonkey
-  username: gamemonkey
+  database: gamebutler
+  username: gamebutler
   password: Test!@#$
   host: localhost
 #  socket: /tmp/mysql.sock
