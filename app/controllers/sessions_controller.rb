@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
 	def create
 		if login(params[:email], params[:password], params[:remember_me])
-			flash[:success] = "Welcome to GameMonkey!"
+			flash[:success] = "Welcome to GameButler!"
 			redirect_to dashboard_path
 		else
 			flash.now[:warning] = "Email and/or password is incorrect."
