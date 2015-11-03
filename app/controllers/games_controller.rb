@@ -82,6 +82,7 @@ class GamesController < ApplicationController
   def checkin
     @game.checked_in = true
     @game.borrower_id = nil
+    @game.last_checkin = Time.now
     if @game.save then
       redirect_to dashboard_path, notice: "Game was checked in."
     else
@@ -100,6 +101,6 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:title, :description, :borrower_id, :user_id, :checked_in)
+      params.require(:game).permit(:title, :description, :borrower_id, :user_id, :checked_in, :last_checkin, :last_checkout)
     end
 end

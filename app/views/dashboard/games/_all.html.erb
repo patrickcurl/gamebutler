@@ -7,6 +7,8 @@
   	<th>Check out / Check in</th>
   	<th>Borrower</th>
   	<th>Owner</th>
+  	<th>Last Checkout</th>
+  	<th>Last Checkin</th>
   </thead>
   <tbody>
     <% @games.each do |m| %>
@@ -22,6 +24,8 @@
     		</td>
     		<td><% if m.borrower %><%= m.borrower.name %><% end %></td>
     		<td><%= m.user.name %></td>
+    		<td><% if m.last_checkout %><%= m.last_checkout.to_s(:long) %><% end %></td>
+        <td><% if m.last_checkin %><%= m.last_checkin.to_s(:long) %><% end %></td>
     	</tr>
     <% end %>
   </tbody>

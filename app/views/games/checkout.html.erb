@@ -5,5 +5,6 @@ Description: <%= @game.description %><br />
 <%= form_for(@game) do |g| %>
 <%= g.collection_select :borrower_id, @users, :id, :name, include_blank: true %>
 <%= g.hidden_field :checked_in, value: false %>
+<%= g.hidden_field :last_checkout, value: Time.now %>
  	<%= submit_tag("Checkout") %>
 <% end %>
