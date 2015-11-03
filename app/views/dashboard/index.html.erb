@@ -1,91 +1,55 @@
 <h1>Welcome!</h1>
 
-<div>
 
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <% if current_user.admin? %>
-    <li role="presentation" class="active"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Users</a></li>
-    <% end %>
-    <li role="presentation" 
-    	<% if !current_user.admin? %> 
-    		class="active" 
-    	<% end %>
-    ><a href="#games" aria-controls="games" role="tab" data-toggle="tab">Games</a></li>
 
-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-  </ul>
 
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane <% if current_user.admin? %>active<% end %>" id="users">Users</div>
-    <div role="tabpanel" class="tab-pane <% if !current_user.admin? %>active<% end %>" id="games">
-    	<ul class="nav nav-tabs" role="tablist">
-    		<li role="presentation" class="active"><a href="#mygames" aria-conrolts="mygames" role="tab" data-toggle="tab">My Games</a></li>
-    		<li role="presentation"><a href="#allgames" aria-conrolts="allgames" role="tab" data-toggle="tab">All Games</a></li>
-    		<li role="presentation"><a href="#borrowedgames" aria-conrolts="borrowedgames" role="tab" data-toggle="tab">Borrowed Games</a></li>
-    	</ul>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="profile">Profile</div>
-    <div role="tabpanel" class="tab-pane" id="settings">Settings</div>
-  </div>
-
-<div class="tab-content">
-	<div role="tabpanel" class="tab-pane active" id="mygames">
-		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
+<%= render "games/modals/new" %>
+<div class="tabbable boxed parentTabs">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#games">Games</a></li>
+        <% if current_user.admin? %><li><a href="#users">Users</a></li><% end %>
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#settings">Settings</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="games">
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#mygames">My Games</a></li>
+                    <li><a href="#allgames">All Games</a></li>
+                    <li><a href="#borrowedgames">Borrowed Games</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="mygames">
+                        <%= render 'dashboard/games/owned' %>
+                    </div>
+                    <div class="tab-pane fade" id="allgames">
+                        <%= render 'dashboard/games/all' %>
+                    </div>
+                    <div class="tab-pane fade" id="borrowedgames">
+                        <%= render 'dashboard/games/borrowed' %>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  New Game
 </button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <%= form_for(@game) do |f| %>
-  <% if @game.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
-
-      <ul>
-      <% @game.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        </div>
+        <div class="tab-pane fade" id="users">
+            <%= render 'dashboard/users/all' %>
+        </div>
+        <div class="tab-pane fade" id="profile">
+            Edit own profile here.  
+        </div>
+        <div class="tab-pane fade" id="settings">
+            Edit app settings here.  
+        </div>
+        
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
-	<ol>
-	<% @mygames.each do |m| %>
-		<li><%= m.title %> - <%= m.description %></li>
-	<% end %>
-	</ol>
-	</div>
-	<div role="tabpanel" class="tab-pane" id="allgames">All Games</div>
-	<div role="tabpanel" class="tab-pane" id="borrowedgames">Borrowed Games</div>
 
-</div>
+<script>$("ul.nav-tabs a").click(function (e) {
+  e.preventDefault();  
+    $(this).tab('show');
+});
+</script>

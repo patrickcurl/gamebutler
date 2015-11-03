@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	skip_before_action :require_login, only: [:new, :create, :activate]
-
+	before_action :set_user, only: [:edit, :update]
 	def new
 		@user = User.new
 	end
@@ -16,6 +16,24 @@ class UsersController < ApplicationController
 		end
 	end
 
+	# GET /games/1/edit
+  def edit
+  end
+
+  # PATCH/PUT /games/1
+  # PATCH/PUT /games/1.json
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to dashboard_path, notice: 'User was successfully updated.' }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 	def activate
 		if @user = User.load_from_activation_token(params[:id])
 			@user.activate!
@@ -28,6 +46,9 @@ class UsersController < ApplicationController
 	end
 
 	private
+	def set_user
+      @user = User.find(params[:id])
+    end
 	def user_params
 		params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name)
 	end

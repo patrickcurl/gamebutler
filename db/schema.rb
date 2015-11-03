@@ -11,27 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030165224) do
+ActiveRecord::Schema.define(version: 20151103131400) do
 
   create_table "games", force: :cascade do |t|
-    t.string   "title",       limit: 255
-    t.text     "description", limit: 65535
-    t.integer  "user_id",     limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "title",        limit: 255
+    t.text     "description",  limit: 65535
+    t.integer  "user_id",      limit: 4
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.boolean  "checked_in",                 default: true
+    t.datetime "last_checkin"
+    t.string   "borrower_id",  limit: 255
   end
-
-  create_table "rentals", force: :cascade do |t|
-    t.integer  "game_id",    limit: 4
-    t.integer  "renter_id",  limit: 4
-    t.datetime "checkout"
-    t.datetime "checkin"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "rentals", ["game_id"], name: "index_rentals_on_game_id", using: :btree
-  add_index "rentals", ["renter_id"], name: "index_rentals_on_renter_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name",        limit: 255,   null: false
@@ -66,5 +57,4 @@ ActiveRecord::Schema.define(version: 20151030165224) do
   add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", using: :btree
 
-  add_foreign_key "rentals", "users", column: "renter_id"
 end

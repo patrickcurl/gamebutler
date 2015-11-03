@@ -1,0 +1,23 @@
+<div class="table-responsive">
+  <table id="users" class="table table-striped table-bordered table-hover table-responsive">
+  <thead>
+  	<th>#</th>
+  	<th>Title</th>
+  	<th>Description</th>
+  	<th>Check out / Check in</th>
+  	<th>Borrower</th>
+  </thead>
+  <tbody>
+    <% @users.each do |u| %>
+    	<tr>
+    		<td><%= u.id %></td>
+    		<td><%= u.name %></td>
+    		<td><%= u.email %></td>
+        <td><%= u.activation_state %></td>
+        <td><%= u.role.name %></td>
+        <td><%= link_to "Edit user", controller: 'users', action: 'edit', id: u.id %>
+    	</tr>
+    <% end %>
+  </tbody>
+  </table>
+</div>

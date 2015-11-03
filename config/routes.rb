@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :games
   root 'home#index'
   get '/dashboard', to: 'dashboard#index', as: :dashboard
-  resources :users, only: [:new, :create] do
+  get '/games/checkout/:id', to: 'games#checkout'
+  get '/games/checkin/:id', to: 'games#checkin'
+  resources :users, only: [:new, :create, :edit, :update] do
     member do 
       get :activate
     end
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   get '/log_in', to: 'sessions#new', as: :log_in
   delete '/log_out', to: 'sessions#destroy', as: :log_out
+
   
   TheRoleManagementPanel::Routes.mixin(self)
   # The priority is based upon order of creation: first created -> highest priority.

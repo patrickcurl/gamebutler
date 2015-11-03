@@ -1,0 +1,9 @@
+Game Checkout
+Title: <%= @game.title %><br />
+Description: <%= @game.description %><br />
+
+<%= form_for(@game) do |g| %>
+<%= g.collection_select :borrower_id, @users, :id, :name, include_blank: true %>
+<%= g.hidden_field :checked_in, value: false %>
+ 	<%= submit_tag("Checkout") %>
+<% end %>

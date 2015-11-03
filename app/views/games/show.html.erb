@@ -9,6 +9,16 @@
   <strong>Description:</strong>
   <%= @game.description %>
 </p>
+<p>
+  <strong>Owner:</strong>
+  <%= @game.user.first_name %> <%= @game.user.last_name %> 
+</p>
+<% if @game.borrower %>
+<p>
+  <strong>Borrower:</strong>
+  <%= @game.borrower.first_name %> <%= @game.borrower.last_name %> 
+</p>
+<% end %>
 
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
